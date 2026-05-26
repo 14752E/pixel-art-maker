@@ -66,11 +66,29 @@ function render() {
 // --- Step 2-a: Map mouse position to grid cell ---
 
 function getCellFromMouse(e) {
+  
+  //size of canvas + its relative position
+  let rect = canvas.getBoundingClientRect();
+
+  //we want the position of the mouse according to the canva
+  let x = event.clientX - rect.left;
+  let y = event.clientY - rect.top;
+  
+  //convert to grid coordinates
+  const row = Maths.floor(x/cellSize);
+  const col = Maths.floor(y/cellSize);
+
+  if (row>=0 && row<gridSize && col>=0 && col<gridSize) {
+    return {row,col};
+  }
+  return null;
 }
 
 // --- Step 2-b: Paint a single cell ---
 
 function paintCell(row, col) {
+  grid[row][col] = currentColor;
+  render();
 }
 
 // --- Step 2-c: Mouse event handlers ---
