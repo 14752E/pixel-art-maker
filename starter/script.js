@@ -94,15 +94,26 @@ function paintCell(row, col) {
 // --- Step 2-c: Mouse event handlers ---
 
 canvas.addEventListener("mousedown", (e) => {
+  isDrawing = true;
+  const cell = getCellFromMouse(e);
+  paintCell(cell.row, cell.col);
 });
 
 canvas.addEventListener("mousemove", (e) => {
+  const cell = getCellFromMouse(e);
+  if (isDrawing) {
+    paintCell(cell.row, cell.col);
+  }
+  render();
 });
 
 canvas.addEventListener("mouseup", () => {
+  isDrawing = false;
 });
 
 canvas.addEventListener("mouseleave", () => {
+  isDrawing = false;
+  render();
 });
 
 // --- Step 3: Flood fill algorithm ---
